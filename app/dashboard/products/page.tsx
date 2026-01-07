@@ -1,8 +1,8 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Suspense, useState, useMemo } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { Suspense, useMemo, useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api-client";
 import {
   Table,
@@ -24,8 +24,19 @@ import {
 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
+import { toast } from "sonner";
 
-import { EditProductModal } from "./_components/EditProductModal"; // adjust path
+import { EditProductModal } from "./_components/EditProductModal";
+
+// ✅ shadcn/ui dialog (make sure you have these components in your project)
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 // Custom pagination helper to match the [1, 2, 3, "...", 17] style
 function getPageNumbers(current: number, total: number) {
@@ -42,13 +53,18 @@ function getPageNumbers(current: number, total: number) {
 }
 
 function ProductListContent() {
+  const queryClient = useQueryClient();
+
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const limit = 10;
 
-  // inside ProductListContent:
   const [editOpen, setEditOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
+
+  // ✅ delete confirmation modal state
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [deleteProductTarget, setDeleteProductTarget] = useState<any>(null);
 
   const { data: productData, isLoading } = useQuery({
     queryKey: ["products", page, search],
@@ -65,6 +81,30 @@ function ProductListContent() {
     () => getPageNumbers(page, totalPages),
     [page, totalPages]
   );
+
+  // ✅ delete mutation: DELETE /products/:id
+  const deleteProductMutation = useMutation({
+    mutationFn: async (id: string) => {
+      // make sure your axios baseURL already points to API
+      const res = await apiClient.delete(`/products/${id}`);
+      return res.data;
+    },
+    onSuccess: () => {
+      toast.success("Product deleted successfully");
+      setDeleteOpen(false);
+      setDeleteProductTarget(null);
+
+      // refresh list
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+    },
+    onError: (err: any) => {
+      const msg =
+        err?.response?.data?.message ||
+        err?.message ||
+        "Failed to delete product";
+      toast.error(msg);
+    },
+  });
 
   return (
     <div className="space-y-6 py-6">
@@ -121,6 +161,7 @@ function ProductListContent() {
               </TableHead>
             </TableRow>
           </TableHeader>
+
           <TableBody>
             {isLoading ? (
               Array(5)
@@ -132,7 +173,7 @@ function ProductListContent() {
                     </TableCell>
                   </TableRow>
                 ))
-            ) : productData?.docs.length === 0 ? (
+            ) : productData?.docs?.length === 0 ? (
               <TableRow>
                 <TableCell
                   colSpan={5}
@@ -142,7 +183,7 @@ function ProductListContent() {
                 </TableCell>
               </TableRow>
             ) : (
-              productData?.docs.map((product: any) => (
+              productData?.docs?.map((product: any) => (
                 <TableRow
                   key={product._id}
                   className="border-b border-slate-50 hover:bg-slate-50/50 transition-colors"
@@ -151,7 +192,7 @@ function ProductListContent() {
                     <div className="flex items-center gap-4">
                       <div className="w-14 h-14 rounded-xl bg-slate-50 overflow-hidden border border-slate-100 flex-shrink-0">
                         <img
-                          src={product.avatar?.url || "/placeholder.svg"}
+                          src={product.image?.url || "/placeholder.svg"} // ✅ use image (backend)
                           alt={product.name}
                           className="w-full h-full object-cover"
                         />
@@ -161,15 +202,20 @@ function ProductListContent() {
                       </span>
                     </div>
                   </TableCell>
+
                   <TableCell className="text-slate-500 font-bold text-sm">
-                    {product.quantity} Piece
+                    {product.remainingUnit ?? product.totalUnit}{" "}
+                    {product.unit ?? "pieces"}
                   </TableCell>
+
                   <TableCell className="text-slate-500 font-bold text-sm">
                     ${product.perPrice}
                   </TableCell>
+
                   <TableCell className="text-slate-500 font-bold text-sm">
                     {new Date(product.createdAt).toISOString().split("T")[0]}
                   </TableCell>
+
                   <TableCell className="text-right px-6 space-x-1">
                     <Button
                       variant="ghost"
@@ -183,10 +229,15 @@ function ProductListContent() {
                       <Edit2 className="w-4 h-4" />
                     </Button>
 
+                    {/* ✅ Click Trash => open confirm modal */}
                     <Button
                       variant="ghost"
                       size="icon"
                       className="text-slate-400 hover:text-red-500 hover:bg-red-50"
+                      onClick={() => {
+                        setDeleteProductTarget(product);
+                        setDeleteOpen(true);
+                      }}
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>
@@ -201,7 +252,9 @@ function ProductListContent() {
       {/* Pagination Footer */}
       <div className="flex items-center justify-between pt-4">
         <div className="text-slate-400 font-bold text-sm">
-          Showing 1 to 10 of {productData?.totalDocs || 0} results
+          Showing {(page - 1) * limit + 1} to{" "}
+          {Math.min(page * limit, productData?.totalDocs || 0)} of{" "}
+          {productData?.totalDocs || 0} results
         </div>
 
         <div className="flex items-center gap-2">
@@ -256,6 +309,60 @@ function ProductListContent() {
           product={selectedProduct}
         />
       </div>
+
+      {/* ✅ Delete Confirmation Modal */}
+      <Dialog
+        open={deleteOpen}
+        onOpenChange={(open) => {
+          // prevent closing while deleting
+          if (deleteProductMutation.isPending) return;
+          setDeleteOpen(open);
+          if (!open) setDeleteProductTarget(null);
+        }}
+      >
+        <DialogContent className="sm:max-w-[450px] rounded-2xl bg-white">
+          <DialogHeader>
+            <DialogTitle className="text-slate-900">
+              Delete product?
+            </DialogTitle>
+            <DialogDescription className="text-slate-500">
+              This action cannot be undone. This will permanently delete{" "}
+              <span className="font-bold text-slate-700">
+                {deleteProductTarget?.name}
+              </span>
+              .
+            </DialogDescription>
+          </DialogHeader>
+
+          <DialogFooter className="gap-2 space-x-3 sm:gap-0">
+            <Button
+              type="button"
+              variant="secondary"
+              className="rounded-xl"
+              disabled={deleteProductMutation.isPending}
+              onClick={() => {
+                setDeleteOpen(false);
+                setDeleteProductTarget(null);
+              }}
+            >
+              No
+            </Button>
+
+            <Button
+              type="button"
+              className="rounded-xl bg-red-600 hover:bg-red-700 text-white"
+              disabled={deleteProductMutation.isPending}
+              onClick={() => {
+                const id = deleteProductTarget?._id;
+                if (!id) return toast.error("Missing product id");
+                deleteProductMutation.mutate(id);
+              }}
+            >
+              {deleteProductMutation.isPending ? "Deleting..." : "Yes, Delete"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

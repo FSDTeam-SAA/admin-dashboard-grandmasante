@@ -37,7 +37,6 @@ const menuItems = [
   { name: "Commercial Sales", icon: TrendingUp, href: "/dashboard/commercial-sales" },
   { name: "In House Sales", icon: Home, href: "/dashboard/in-house-sales" },
   { name: "Subscription Plan", icon: CreditCard, href: "/dashboard/subscriptions" },
-  { name: "App Usage History", icon: History, href: "/dashboard/usage" },
   { name: "Order Lists", icon: ShoppingCart, href: "/dashboard/orders" },
   { name: "Delivered Orders", icon: PackageCheck, href: "/dashboard/delivered-orders" },
   { name: "Settings", icon: Settings, href: "/dashboard/settings" },
