@@ -4,16 +4,15 @@ import { Suspense } from "react"
 import { Skeleton } from "@/components/ui/skeleton"
 import { OrderStatusTable } from "@/components/orders/order-status-table"
 
-export default function OrderListPage() {
+export default function DeliveredOrdersPage() {
   return (
     <Suspense fallback={<div className="p-8"><Skeleton className="h-[600px] w-full rounded-[32px]" /></div>}>
       <OrderStatusTable
-        status="ongoing"
-        title="Order Lists"
-        breadcrumb="Admin / Order"
-        description="Track ongoing orders and confirm deliveries once they are completed."
-        showConfirmButton
-        confirmLabel="Confirm Delivery"
+        status="delivered"
+        title="Delivered Orders"
+        breadcrumb="Admin / Delivered Orders"
+        description="Browse the orders that have been fulfilled and delivered to customers."
+        emptyMessage="No delivered orders found yet."
         enableDelete
       />
     </Suspense>

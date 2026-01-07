@@ -8,17 +8,18 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { toast } from "sonner"
 import Link from "next/link"
+import { Eye, EyeOff } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
-import { 
-  Form, 
-  FormControl, 
-  FormField, 
-  FormItem, 
-  FormLabel, 
-  FormMessage 
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from "@/components/ui/form"
 
 const loginSchema = z.object({
@@ -30,13 +31,14 @@ const loginSchema = z.object({
 export default function LoginPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
-    defaultValues: { 
+    defaultValues: {
       email: "",
       password: "",
-      rememberMe: false 
+      rememberMe: false,
     },
   })
 
@@ -60,8 +62,12 @@ export default function LoginPage() {
   return (
     <div className="w-full max-w-[440px] space-y-8">
       <div className="space-y-2 text-center">
-        <h1 className="text-3xl font-bold tracking-tight text-slate-900">Login to Account</h1>
-        <p className="text-slate-500 font-medium">Please enter your email and password to continue</p>
+        <h1 className="text-3xl font-bold tracking-tight text-slate-900">
+          Login to Account
+        </h1>
+        <p className="text-slate-500 font-medium">
+          Please enter your email and password to continue
+        </p>
       </div>
 
       <Form {...form}>
@@ -72,7 +78,9 @@ export default function LoginPage() {
             name="email"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <FormLabel className="text-slate-700 font-semibold ml-1">Email Address</FormLabel>
+                <FormLabel className="text-slate-700 font-semibold ml-1">
+                  Email Address
+                </FormLabel>
                 <FormControl>
                   <Input
                     placeholder="you@gmail.com"
@@ -85,20 +93,36 @@ export default function LoginPage() {
             )}
           />
 
-          {/* Password Field */}
+          {/* Password Field with Eye Toggle */}
           <FormField
             control={form.control}
             name="password"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <FormLabel className="text-slate-700 font-semibold ml-1">Password</FormLabel>
+                <FormLabel className="text-slate-700 font-semibold ml-1">
+                  Password
+                </FormLabel>
                 <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="••••••"
-                    {...field}
-                    className="rounded-full bg-white border-none h-12 px-6 shadow-sm focus-visible:ring-1 focus-visible:ring-slate-300"
-                  />
+                  <div className="relative">
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      placeholder="••••••"
+                      {...field}
+                      className="rounded-full bg-white border-none h-12 px-6 pr-12 shadow-sm focus-visible:ring-1 focus-visible:ring-slate-300"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((p) => !p)}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-800 transition-colors"
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-5 w-5" />
+                      ) : (
+                        <Eye className="h-5 w-5" />
+                      )}
+                    </button>
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -125,8 +149,8 @@ export default function LoginPage() {
                 </FormItem>
               )}
             />
-            <Link 
-              href="/auth/forgot-password" 
+            <Link
+              href="/auth/forgot-password"
               className="text-sm font-semibold text-slate-800 hover:text-slate-600 transition-colors"
             >
               Forgot Password?
