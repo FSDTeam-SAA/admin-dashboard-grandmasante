@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { apiClient } from "@/lib/api-client"
+import { PRODUCT_CATEGORY_OPTIONS } from "@/lib/product-categories"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -20,6 +21,7 @@ type Product = {
   quantity?: number // your current UI
   totalUnit?: number // backend
   unit?: string
+  category?: string | null
   image?: { url?: string }
   avatar?: { url?: string } // your current UI
 }
@@ -42,6 +44,7 @@ export function EditProductModal({
       // support both shapes
       totalUnit: String(product.totalUnit ?? product.quantity ?? ""),
       unit: product.unit ?? "Piece",
+      category: product.category ?? "",
       perPrice: String(product.perPrice ?? ""),
       previewUrl: product.image?.url ?? product.avatar?.url ?? "",
     }
@@ -50,6 +53,7 @@ export function EditProductModal({
   const [name, setName] = useState("")
   const [totalUnit, setTotalUnit] = useState("")
   const [unit, setUnit] = useState("Piece")
+  const [category, setCategory] = useState("")
   const [perPrice, setPerPrice] = useState("")
   const [file, setFile] = useState<File | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string>("")
@@ -59,6 +63,7 @@ export function EditProductModal({
     setName(initial.name)
     setTotalUnit(initial.totalUnit)
     setUnit(initial.unit)
+    setCategory(initial.category)
     setPerPrice(initial.perPrice)
     setFile(null)
     setPreviewUrl(initial.previewUrl)
@@ -73,6 +78,7 @@ export function EditProductModal({
       fd.append("totalUnit", totalUnit) // backend expects totalUnit
       fd.append("unit", unit)
       fd.append("perPrice", perPrice)
+      fd.append("category", category)
       if (file) fd.append("image", file) // IMPORTANT: must be "image"
 
       const res = await apiClient.put(`/products/${product._id}`, fd, {
@@ -141,6 +147,24 @@ export function EditProductModal({
                 <label className="text-sm font-semibold text-slate-600">Unit</label>
                 <Input className="mt-2" value={unit} onChange={(e) => setUnit(e.target.value)} />
               </div>
+            </div>
+
+            <div>
+              <label className="text-sm font-semibold text-slate-600">
+                Category <span className="text-slate-400 font-medium">(Optional)</span>
+              </label>
+              <select
+                className="mt-2 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <option value="">No category selected</option>
+                {PRODUCT_CATEGORY_OPTIONS.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div>
