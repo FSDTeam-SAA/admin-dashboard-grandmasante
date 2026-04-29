@@ -16,6 +16,7 @@ import {
   PackageCheck,
   Settings,
   LogOut,
+  MessageCircle,
 } from "lucide-react";
 import {
   AlertDialog,
@@ -39,6 +40,7 @@ const menuItems = [
   { name: "Subscription Plan", icon: CreditCard, href: "/dashboard/subscriptions" },
   { name: "Order Lists", icon: ShoppingCart, href: "/dashboard/orders" },
   { name: "Delivered Orders", icon: PackageCheck, href: "/dashboard/delivered-orders" },
+  { name: "Regular Followup", icon: MessageCircle, href: "/dashboard/followup" },
   { name: "Settings", icon: Settings, href: "/dashboard/settings" },
 ];
 
