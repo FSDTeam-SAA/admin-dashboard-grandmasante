@@ -9,6 +9,7 @@ import { z } from "zod"
 import { toast } from "sonner"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { apiClient } from "@/lib/api-client"
+import { formatCfa } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
@@ -190,8 +191,8 @@ export default function EditProductPage() {
 
                     <div className="flex items-center gap-3">
                       <div className="relative">
-                        <span className="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-slate-400">$</span>
-                        <Input {...form.register("price")} className="w-24 h-12 pl-8 text-center font-bold rounded-lg border-slate-200 bg-white" />
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 font-bold text-xs tracking-wide text-slate-400">CFA</span>
+                        <Input {...form.register("price")} className="w-32 h-12 pl-14 text-center font-bold rounded-lg border-slate-200 bg-white" />
                       </div>
                       <span className="text-slate-600 font-bold">Price</span>
                     </div>
@@ -207,10 +208,10 @@ export default function EditProductPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <FormLabel className="text-slate-800 font-bold">Total Amount</FormLabel>
+                  <FormLabel className="text-slate-800 font-bold">Total Amount (CFA)</FormLabel>
                   <Input 
                     disabled 
-                    value={`$${totalAmount.toFixed(2)}`}
+                    value={formatCfa(totalAmount, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     className="h-12 bg-slate-50 border-slate-200 rounded-xl font-bold text-[#38B475] opacity-100 cursor-not-allowed" 
                   />
                 </div>

@@ -7,6 +7,7 @@ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { Users, Filter } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
+import { formatCfa } from "@/lib/utils"
 
 export default function DashboardPage() {
   const { data: dashboardData, isLoading } = useQuery({
@@ -22,7 +23,7 @@ export default function DashboardPage() {
   const metrics = [
     {
       label: "Total Revenue",
-      value: `$${dashboardData?.totalRevenue?.toLocaleString() || "11,020"}`,
+      value: formatCfa(dashboardData?.totalRevenue, { fallback: "CFA 11,020" }),
       icon: "S",
       color: "bg-[#FF5D47]",
       cardBg: "bg-[#FDE7E4]",
@@ -90,7 +91,7 @@ export default function DashboardPage() {
                 </div>
                 <div className={`w-12 h-12 rounded-full ${metric.color} flex items-center justify-center shadow-lg shadow-black/5`}>
                   {typeof metric.icon === 'string' ? (
-                    <span className="text-white text-xl font-bold italic">$</span>
+                    <span className="text-white text-[11px] font-black tracking-wide">CFA</span>
                   ) : (
                     metric.icon
                   )}

@@ -143,7 +143,7 @@ export default function PlanFormModal({ open, onOpenChange, mode, plan }: Props)
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="grid gap-2">
-              <Label className="text-slate-700 font-semibold ml-1">Price ($)</Label>
+              <Label className="text-slate-700 font-semibold ml-1">Price (CFA)</Label>
               <Input
                 type="number"
                 className="bg-slate-50 border-slate-200 text-black h-11 focus-visible:ring-emerald-500"
@@ -176,7 +176,7 @@ export default function PlanFormModal({ open, onOpenChange, mode, plan }: Props)
           {/* ✅ carryCredit field */}
           <div className="grid gap-2">
             <Label className="text-slate-700 font-semibold ml-1">
-              Carry Credit
+              Carry Credit (CFA)
             </Label>
             <Input
               type="number"
