@@ -8,6 +8,8 @@ import { z } from "zod"
 import { toast } from "sonner"
 import { useMutation } from "@tanstack/react-query"
 import { apiClient } from "@/lib/api-client"
+import { PRODUCT_CATEGORY_OPTIONS } from "@/lib/product-categories"
+import { formatCfa } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
@@ -20,6 +22,7 @@ const productSchema = z.object({
   totalUnit: z.string().refine((v) => !isNaN(Number(v)) && Number(v) > 0, "Must be a positive number"),
   perPrice: z.string().refine((v) => !isNaN(Number(v)) && Number(v) > 0, "Must be a positive number"),
   unit: z.string().optional(),
+  category: z.string().optional(),
 })
 
 type ProductFormValues = z.infer<typeof productSchema>
@@ -37,6 +40,7 @@ export default function AddProductPage() {
       totalUnit: "1",
       perPrice: "1",
       unit: "pieces",
+      category: "",
     },
   })
 
@@ -57,6 +61,9 @@ export default function AddProductPage() {
       fd.append("totalUnit", String(Number(values.totalUnit)))
       fd.append("perPrice", String(Number(values.perPrice)))
       fd.append("unit", values.unit ?? "pieces")
+      if (values.category?.trim()) {
+        fd.append("category", values.category.trim())
+      }
 
       // ✅ This MUST match your multer field name.
       // If your route is like: upload.single("image") then keep "image".
@@ -154,13 +161,13 @@ export default function AddProductPage() {
                     {/* Per Price Input */}
                     <div className="flex items-center gap-3">
                       <div className="relative">
-                        <span className="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-slate-500">
-                          $
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 font-bold text-xs tracking-wide text-slate-500">
+                          CFA
                         </span>
                         <Input
                           {...form.register("perPrice")}
                           inputMode="decimal"
-                          className="w-24 h-12 pl-8 text-center font-bold rounded-lg border-slate-200"
+                          className="w-32 h-12 pl-14 text-center font-bold rounded-lg border-slate-200"
                         />
                       </div>
                       <span className="text-slate-600 font-bold">Price</span>
@@ -186,11 +193,36 @@ export default function AddProductPage() {
                   </div>
                 </div>
 
+                <FormField
+                  control={form.control}
+                  name="category"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-slate-800 font-bold">
+                        Category <span className="text-slate-400 font-medium">(Optional)</span>
+                      </FormLabel>
+                      <FormControl>
+                        <select
+                          {...field}
+                          className="flex h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-800 shadow-sm outline-none"
+                        >
+                          <option value="">No category selected</option>
+                          {PRODUCT_CATEGORY_OPTIONS.map((option) => (
+                            <option key={option.value} value={option.value}>
+                              {option.label}
+                            </option>
+                          ))}
+                        </select>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
                 <div className="space-y-2">
-                  <FormLabel className="text-slate-800 font-bold">Total Amount</FormLabel>
+                  <FormLabel className="text-slate-800 font-bold">Total Amount (CFA)</FormLabel>
                   <Input
                     disabled
-                    value={totalAmount}
+                    value={formatCfa(totalAmount)}
                     className="h-12 bg-slate-50/50 border-slate-200 rounded-xl font-bold text-slate-800"
                   />
                 </div>

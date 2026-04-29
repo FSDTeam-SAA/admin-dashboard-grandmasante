@@ -13,14 +13,12 @@ export const metadata: Metadata = {
   title: "Grandma santé | Admin Dashboard",
   description: "Healthcare administration panel for Grandma santé",
   generator: "Grandma santé.app",
-  // icons: {
-  //   icon: [
-  //     { url: "/icon-light-32x32.png", media: "(prefers-color-scheme: light)" },
-  //     { url: "/icon-dark-32x32.png", media: "(prefers-color-scheme: dark)" },
-  //     { url: "/icon.svg", type: "image/svg+xml" },
-  //   ],
-  //   apple: "/apple-icon.png",
-  // },
+  icons: {
+    icon: [
+      { url: "/logo.png", sizes: "any" },
+    ],
+    apple: "/apple-icon.png",
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

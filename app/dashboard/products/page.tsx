@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn, formatCfa } from "@/lib/utils";
 import { Suspense, useMemo, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api-client";
@@ -25,6 +25,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { toast } from "sonner";
+import { getProductCategoryLabel } from "@/lib/product-categories";
 
 import { EditProductModal } from "./_components/EditProductModal";
 
@@ -151,7 +152,10 @@ function ProductListContent() {
                 Remaining Amount
               </TableHead>
               <TableHead className="text-slate-500 font-bold">
-                Per Piece Price
+                Category
+              </TableHead>
+              <TableHead className="text-slate-500 font-bold">
+                Per Piece Price (CFA)
               </TableHead>
               <TableHead className="text-slate-500 font-bold">
                 Added Date
@@ -168,7 +172,7 @@ function ProductListContent() {
                 .fill(0)
                 .map((_, i) => (
                   <TableRow key={i}>
-                    <TableCell colSpan={5} className="p-4">
+                    <TableCell colSpan={6} className="p-4">
                       <Skeleton className="h-16 w-full opacity-50" />
                     </TableCell>
                   </TableRow>
@@ -176,7 +180,7 @@ function ProductListContent() {
             ) : productData?.docs?.length === 0 ? (
               <TableRow>
                 <TableCell
-                  colSpan={5}
+                  colSpan={6}
                   className="py-20 text-center text-slate-400 font-medium"
                 >
                   No products found
@@ -209,7 +213,11 @@ function ProductListContent() {
                   </TableCell>
 
                   <TableCell className="text-slate-500 font-bold text-sm">
-                    ${product.perPrice}
+                    {getProductCategoryLabel(product.category)}
+                  </TableCell>
+
+                  <TableCell className="text-slate-500 font-bold text-sm">
+                    {formatCfa(product.perPrice)}
                   </TableCell>
 
                   <TableCell className="text-slate-500 font-bold text-sm">

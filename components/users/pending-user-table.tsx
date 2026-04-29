@@ -5,7 +5,7 @@ import type { AxiosError } from "axios"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { apiClient } from "@/lib/api-client"
 import { toast } from "sonner"
-import { cn } from "@/lib/utils"
+import { cn, formatCfa } from "@/lib/utils"
 import { Search, Filter, ChevronLeft, ChevronRight } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -49,7 +49,7 @@ export function PendingUserTable({ role, title, description }: PendingUserTableP
   const [search, setSearch] = useState("")
   const queryClient = useQueryClient()
 
-  const { data, isLoading, isFetching, isError, error } = useQuery<PendingUserResponse, AxiosError>({
+  const { data, isLoading, isFetching, isError, error } = useQuery<PendingUserResponse, AxiosError<{ message?: string }>>({
     queryKey: ["pending-users", role, page, search],
     queryFn: async () => {
       const res = await apiClient.get("/user/users", {
@@ -157,7 +157,7 @@ export function PendingUserTable({ role, title, description }: PendingUserTableP
           </TableCell>
           <TableCell className="text-center text-slate-500 font-medium text-sm">{user.email}</TableCell>
           <TableCell className="text-center text-slate-500 font-medium text-sm">{joinedDate}</TableCell>
-          <TableCell className="text-center text-slate-500 font-bold text-sm">${user.credit?.toLocaleString() ?? 0}</TableCell>
+          <TableCell className="text-center text-slate-500 font-bold text-sm">{formatCfa(user.credit)}</TableCell>
           <TableCell className="text-center">
             <span className="px-6 py-2 rounded-full text-xs font-bold shadow-sm bg-[#FDE7E4] text-[#FF5D47]">
               {user.status?.toUpperCase() || "PENDING"}
@@ -215,7 +215,7 @@ export function PendingUserTable({ role, title, description }: PendingUserTableP
               <TableHead className="py-5 px-6 text-slate-500 font-bold text-base text-center">Name</TableHead>
               <TableHead className="text-slate-500 font-bold text-base text-center">Email</TableHead>
               <TableHead className="text-slate-500 font-bold text-base text-center">Joined Date</TableHead>
-              <TableHead className="text-slate-500 font-bold text-base text-center">Credit</TableHead>
+              <TableHead className="text-slate-500 font-bold text-base text-center">Credit (CFA)</TableHead>
               <TableHead className="text-slate-500 font-bold text-base text-center">Status</TableHead>
               <TableHead className="text-slate-500 font-bold text-base text-center">Action</TableHead>
             </TableRow>

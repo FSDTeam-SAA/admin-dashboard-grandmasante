@@ -127,7 +127,7 @@ export default function PlanEditModal({ open, onOpenChange, plan }: Props) {
 
             <div className="grid grid-cols-3 gap-4">
               <div className="space-y-2">
-                <Label className="text-black font-bold text-sm ml-1">Price ($)</Label>
+                <Label className="text-black font-bold text-sm ml-1">Price (CFA)</Label>
                 <Input
                   type="number"
                   className="h-12 bg-slate-50 border-slate-200 text-black focus-visible:ring-emerald-500 rounded-xl"

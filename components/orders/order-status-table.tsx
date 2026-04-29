@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { apiClient } from "@/lib/api-client"
-import { cn } from "@/lib/utils"
+import { cn, formatCfa } from "@/lib/utils"
 import { toast } from "sonner"
 import { Search, Filter, ChevronLeft, ChevronRight, Trash2 } from "lucide-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
@@ -187,7 +187,7 @@ export function OrderStatusTable({
               <TableHead className="text-slate-500 font-bold text-base">Product</TableHead>
               <TableHead className="text-slate-500 font-bold text-base">Date</TableHead>
               <TableHead className="text-slate-500 font-bold text-base">Customer</TableHead>
-              <TableHead className="text-slate-500 font-bold text-base">Total</TableHead>
+              <TableHead className="text-slate-500 font-bold text-base">Total (CFA)</TableHead>
               <TableHead className="text-slate-500 font-bold text-base text-center">Status</TableHead>
               {showConfirmButton && <TableHead className="text-slate-500 font-bold text-base text-right px-6">Action</TableHead>}
               {enableDelete && <TableHead className="text-slate-500 font-bold text-base text-right px-6">Delete</TableHead>}
@@ -252,7 +252,9 @@ export function OrderStatusTable({
                       <div className="text-[11px] text-slate-500 font-medium">{order.user?.email || "N/A"}</div>
                     </div>
                   </TableCell>
-                  <TableCell className="font-black text-slate-800 text-sm">${Number(order.total ?? 0).toFixed(2)}</TableCell>
+                  <TableCell className="font-black text-slate-800 text-sm">
+                    {formatCfa(order.total, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </TableCell>
                   <TableCell className="text-center">
                     <span className={cn(
                       "px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase",

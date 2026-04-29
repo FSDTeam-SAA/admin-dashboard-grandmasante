@@ -1,6 +1,6 @@
 "use client"
 
-import { cn } from "@/lib/utils"
+import { cn, formatCfa } from "@/lib/utils"
 import { Suspense, useState } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { apiClient } from "@/lib/api-client"
@@ -62,7 +62,7 @@ function UserListContent() {
               <TableHead className="py-6 px-6 text-slate-500 font-bold text-base text-center">Name</TableHead>
               <TableHead className="text-slate-500 font-bold text-base text-center">Email</TableHead>
               <TableHead className="text-slate-500 font-bold text-base text-center">Joined Date</TableHead>
-              <TableHead className="text-slate-500 font-bold text-base text-center">Spent on Subscription</TableHead>
+              <TableHead className="text-slate-500 font-bold text-base text-center">Spent on Subscription (CFA)</TableHead>
               <TableHead className="text-slate-500 font-bold text-base text-center">Status</TableHead>
               <TableHead className="text-slate-500 font-bold text-base text-center">Action</TableHead>
             </TableRow>
@@ -89,7 +89,7 @@ function UserListContent() {
                   </TableCell>
                   <TableCell className="text-center text-slate-500 font-medium text-sm">{user.email}</TableCell>
                   <TableCell className="text-center text-slate-500 font-medium text-sm">{user.createdAt?.split('T')[0] || "2023-06-08"}</TableCell>
-                  <TableCell className="text-center text-slate-500 font-bold text-sm">${user.spent || "200"}</TableCell>
+                  <TableCell className="text-center text-slate-500 font-bold text-sm">{formatCfa(user.spent || 200)}</TableCell>
                   <TableCell className="text-center">
                     <span className={cn(
                       "px-6 py-2 rounded-full text-xs font-bold shadow-sm",

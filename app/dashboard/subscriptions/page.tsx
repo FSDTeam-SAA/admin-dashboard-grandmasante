@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Users } from "lucide-react";
+import { formatCfa } from "@/lib/utils";
 
 import PlanFormModal from "./_components/PlanFormModal";
 import DeletePlanModal from "./_components/DeletePlanModal";
@@ -98,7 +99,7 @@ export default function SubscriptionPlansPage() {
                 <CardContent className="space-y-6">
                   <div className="flex items-baseline gap-1 mt-2">
                     <span className="text-4xl font-bold text-slate-800">
-                      ${plan.price}
+                      {formatCfa(plan.price)}
                     </span>
                     <span className="text-slate-400 font-medium">/ user</span>
                   </div>
