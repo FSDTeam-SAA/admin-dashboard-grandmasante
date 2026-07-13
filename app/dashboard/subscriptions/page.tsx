@@ -33,7 +33,7 @@ export default function SubscriptionPlansPage() {
   });
 
   return (
-    <div className="min-h-screen p-8 space-y-8">
+    <div className="space-y-8 py-6 lg:py-8">
       <div className="flex flex-col gap-6">
         <div className="flex items-center justify-between gap-4 flex-wrap">
           <h1 className="text-3xl font-bold text-slate-800">
@@ -52,17 +52,17 @@ export default function SubscriptionPlansPage() {
           </Button>
         </div>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-fit">
-          <TabsList className="bg-slate-200/50 border border-slate-300/20 p-1 h-12 rounded-lg">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="max-w-full overflow-x-auto">
+          <TabsList className="h-auto min-h-12 w-max bg-slate-200/50 border border-slate-300/20 p-1 rounded-lg">
             <TabsTrigger
               value="user"
-              className="px-12 h-10 rounded-md data-[state=active]:bg-emerald-200/60 data-[state=active]:text-emerald-800 transition-all font-medium"
+              className="h-10 px-6 rounded-md data-[state=active]:bg-emerald-200/60 data-[state=active]:text-emerald-800 transition-all font-medium sm:px-12"
             >
               For User
             </TabsTrigger>
             <TabsTrigger
               value="commercial"
-              className="px-12 h-10 rounded-md data-[state=active]:bg-emerald-200/60 data-[state=active]:text-emerald-800 transition-all font-medium"
+              className="h-10 px-6 rounded-md data-[state=active]:bg-emerald-200/60 data-[state=active]:text-emerald-800 transition-all font-medium sm:px-12"
             >
               For Commercial Sales
             </TabsTrigger>
@@ -84,7 +84,7 @@ export default function SubscriptionPlansPage() {
               >
                 <CardHeader className="pb-4">
                   <div className="flex justify-between items-start mb-2">
-                    <CardTitle className="text-3xl font-semibold text-slate-800">
+                    <CardTitle className="text-2xl font-semibold text-slate-800 sm:text-3xl">
                       {plan.name}
                     </CardTitle>
                     <Badge className="bg-blue-600/90 hover:bg-blue-600 text-white rounded-full px-3 py-1 text-[10px] font-bold border-none">
@@ -98,7 +98,7 @@ export default function SubscriptionPlansPage() {
 
                 <CardContent className="space-y-6">
                   <div className="flex items-baseline gap-1 mt-2">
-                    <span className="text-4xl font-bold text-slate-800">
+                    <span className="text-3xl font-bold text-slate-800 sm:text-4xl">
                       {formatCfa(plan.price)}
                     </span>
                     <span className="text-slate-400 font-medium">/ user</span>
@@ -111,7 +111,7 @@ export default function SubscriptionPlansPage() {
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                     <Button
                       className="h-12 font-semibold bg-gradient-to-r from-emerald-500 via-blue-500 to-indigo-600 hover:opacity-90 rounded-xl border-none text-white shadow-lg shadow-blue-200"
                       onClick={() => {

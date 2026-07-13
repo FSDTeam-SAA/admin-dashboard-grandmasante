@@ -111,15 +111,15 @@ function ProductListContent() {
     <div className="space-y-6 py-6">
       {/* Header & Search Area */}
       <div className="flex flex-col gap-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col">
             <h1 className="text-2xl font-bold text-slate-800">Products List</h1>
             <p className="text-sm font-medium text-slate-500">
               Manage your Products
             </p>
           </div>
-          <Link href="/dashboard/products/add">
-            <Button className="bg-[#38B475] hover:bg-[#2e9460] h-11 px-6 rounded-lg flex items-center gap-2 font-bold shadow-sm">
+          <Link href="/dashboard/products/add" className="w-full sm:w-auto">
+            <Button className="bg-[#38B475] hover:bg-[#2e9460] h-11 w-full px-6 rounded-lg flex items-center gap-2 font-bold shadow-sm sm:w-auto">
               <Plus className="w-5 h-5" />
               Add Product
             </Button>
@@ -142,7 +142,7 @@ function ProductListContent() {
 
       {/* Main Table Area */}
       <div className="bg-white rounded-[20px] overflow-hidden border border-slate-100 shadow-sm">
-        <Table>
+        <Table className="min-w-[920px]">
           <TableHeader>
             <TableRow className="border-b border-slate-100 hover:bg-transparent">
               <TableHead className="text-slate-500 font-bold py-5 px-6">
@@ -258,14 +258,14 @@ function ProductListContent() {
       </div>
 
       {/* Pagination Footer */}
-      <div className="flex items-center justify-between pt-4">
+      <div className="flex flex-col gap-4 pt-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="text-slate-400 font-bold text-sm">
           Showing {(page - 1) * limit + 1} to{" "}
           {Math.min(page * limit, productData?.totalDocs || 0)} of{" "}
           {productData?.totalDocs || 0} results
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex max-w-full items-center gap-2 overflow-x-auto pb-1">
           <Button
             variant="outline"
             size="icon"

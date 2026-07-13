@@ -167,9 +167,9 @@ export default function FollowupPage() {
   }
 
   return (
-    <div className="h-[calc(100vh-112px)] py-6">
-      <div className="grid h-full grid-cols-[340px_minmax(0,1fr)_300px] overflow-hidden rounded-2xl border border-white/60 bg-white/75 shadow-sm backdrop-blur">
-        <aside className="border-r border-slate-100 bg-white/80">
+    <div className="flex h-full min-h-0 flex-col py-6">
+      <div className="grid min-h-0 flex-1 grid-cols-1 overflow-hidden rounded-2xl border border-white/60 bg-white/75 shadow-sm backdrop-blur lg:grid-cols-[300px_minmax(0,1fr)] xl:grid-cols-[340px_minmax(0,1fr)_300px]">
+        <aside className="min-h-0 border-b border-slate-100 bg-white/80 lg:border-b-0 lg:border-r">
           <div className="flex items-center gap-3 border-b border-slate-100 px-5 py-4">
             <MessageCircle className="h-5 w-5 text-[#5048E7]" />
             <div>
@@ -178,7 +178,7 @@ export default function FollowupPage() {
             </div>
           </div>
 
-          <div className="h-[calc(100%-73px)] overflow-y-auto">
+          <div className="max-h-72 overflow-y-auto lg:h-[calc(100%-73px)] lg:max-h-none">
             {isLoadingChats && chats.length === 0 ? (
               <div className="p-5 text-sm text-slate-500">Loading chats...</div>
             ) : chats.length === 0 ? (
@@ -217,7 +217,7 @@ export default function FollowupPage() {
           </div>
         </aside>
 
-        <section className="flex min-w-0 flex-col bg-[#F8FAFC]">
+        <section className="flex min-h-0 min-w-0 flex-col bg-[#F8FAFC]">
           <div className="border-b border-slate-100 bg-white px-6 py-4">
             <p className="text-base font-semibold text-slate-900">
               {selectedUser?.name || "Select a conversation"}
@@ -225,7 +225,7 @@ export default function FollowupPage() {
             <p className="text-sm text-slate-500">{selectedUser?.email || "Reply to users from here"}</p>
           </div>
 
-          <div className="flex-1 overflow-y-auto px-6 py-5">
+          <div className="min-h-0 flex-1 overflow-y-auto px-4 py-5 sm:px-6">
             {isLoadingMessages ? (
               <div className="text-sm text-slate-500">Loading messages...</div>
             ) : !selectedUser ? (
@@ -269,7 +269,7 @@ export default function FollowupPage() {
           </div>
 
           <div className="border-t border-slate-100 bg-white p-4">
-            <div className="flex items-end gap-3">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
               <Textarea
                 value={reply}
                 onChange={(event) => setReply(event.target.value)}
@@ -295,7 +295,7 @@ export default function FollowupPage() {
           </div>
         </section>
 
-        <aside className="border-l border-slate-100 bg-white/90 p-5">
+        <aside className="hidden min-h-0 overflow-y-auto border-l border-slate-100 bg-white/90 p-5 xl:block">
           <h2 className="text-base font-semibold text-slate-900">User Information</h2>
           {selectedUser ? (
             <div className="mt-5 space-y-5">

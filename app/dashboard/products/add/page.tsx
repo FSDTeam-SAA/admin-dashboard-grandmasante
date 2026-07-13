@@ -100,7 +100,7 @@ export default function AddProductPage() {
         Back
       </Button>
 
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col">
           <h1 className="text-2xl font-bold text-slate-800">Add Product</h1>
           <p className="text-sm font-medium text-slate-500">Add New Product</p>
@@ -109,7 +109,7 @@ export default function AddProductPage() {
         <Button
           disabled={createProductMutation.isPending}
           onClick={form.handleSubmit((v) => createProductMutation.mutate(v))}
-          className="bg-gradient-to-r from-[#38B475] to-[#4B66F1] hover:opacity-90 h-11 px-8 rounded-xl flex items-center gap-2 font-bold text-white"
+          className="bg-gradient-to-r from-[#38B475] to-[#4B66F1] hover:opacity-90 h-11 w-full px-8 rounded-xl flex items-center gap-2 font-bold text-white sm:w-auto"
         >
           <Save className="w-5 h-5" />
           {createProductMutation.isPending ? "Saving..." : "Save"}
@@ -119,7 +119,7 @@ export default function AddProductPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Side: General Info */}
         <Card className="lg:col-span-2 bg-white/40 border-slate-100 rounded-[24px] shadow-sm">
-          <CardContent className="p-8 space-y-8">
+          <CardContent className="p-4 space-y-8 sm:p-8">
             <h3 className="text-xl font-bold text-slate-800">General Information</h3>
 
             <Form {...form}>
@@ -147,7 +147,7 @@ export default function AddProductPage() {
                 <div className="space-y-4">
                   <FormLabel className="text-slate-800 font-bold">Set Prices</FormLabel>
 
-                  <div className="flex flex-wrap items-center gap-6">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-6">
                     {/* Total Unit Input */}
                     <div className="flex items-center gap-3">
                       <Input
@@ -185,7 +185,7 @@ export default function AddProductPage() {
 
                     <Button
                       type="submit"
-                      className="bg-gradient-to-r from-[#38B475] to-[#4B66F1] h-12 px-10 rounded-xl font-bold text-white ml-auto"
+                      className="bg-gradient-to-r from-[#38B475] to-[#4B66F1] h-12 w-full px-10 rounded-xl font-bold text-white sm:ml-auto sm:w-auto"
                       disabled={createProductMutation.isPending}
                     >
                       {createProductMutation.isPending ? "Saving..." : "Set"}
@@ -233,7 +233,7 @@ export default function AddProductPage() {
 
         {/* Right Side: Image Upload */}
         <Card className="bg-white/40 border-slate-100 rounded-[24px] shadow-sm">
-          <CardContent className="p-8 space-y-6">
+          <CardContent className="p-4 space-y-6 sm:p-8">
             <h3 className="text-xl font-bold text-slate-800">Product Image</h3>
 
             <div className="space-y-4">

@@ -66,14 +66,14 @@ export default function DashboardPage() {
   ]
 
   return (
-    <div className="space-y-10 py-10">
+    <div className="space-y-8 py-6 lg:space-y-10 lg:py-10">
       {/* Header Section */}
-      <div className="flex items-start justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h1 className="text-4xl font-bold text-[#38B475]">Dashboard</h1>
+          <h1 className="text-3xl font-bold text-[#38B475] sm:text-4xl">Dashboard</h1>
           <p className="text-slate-500 font-medium mt-1">Welcome back to your admin panel</p>
         </div>
-        <Button className="rounded-xl border-slate-200 bg-white/50 px-6 py-6 shadow-sm hover:bg-white transition-all gap-2 text-slate-600 font-bold">
+        <Button className="w-full rounded-xl border-slate-200 bg-white/50 px-6 py-6 shadow-sm hover:bg-white transition-all gap-2 text-slate-600 font-bold sm:w-auto">
           <Filter className="w-5 h-5" />
           Filters
         </Button>
@@ -104,9 +104,9 @@ export default function DashboardPage() {
 
       {/* Chart Section */}
       <div className="space-y-6">
-        <h2 className="text-3xl font-bold text-[#38B475]">User Joining Overview</h2>
-        <Card className="border-none bg-white/40 backdrop-blur-md rounded-[32px] shadow-sm p-8">
-          <div className="h-[450px] w-full">
+        <h2 className="text-2xl font-bold text-[#38B475] sm:text-3xl">User Joining Overview</h2>
+        <Card className="border-none bg-white/40 backdrop-blur-md rounded-2xl shadow-sm p-3 sm:p-6 lg:rounded-[32px] lg:p-8">
+          <div className="h-[320px] w-full sm:h-[400px] lg:h-[450px]">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                 <defs>
@@ -168,15 +168,15 @@ export default function DashboardPage() {
 
 function DashboardSkeleton() {
   return (
-    <div className="space-y-10">
-      <div className="flex justify-between">
+      <div className="space-y-8 py-6 lg:space-y-10 lg:py-10">
+      <div className="flex flex-col gap-4 sm:flex-row sm:justify-between">
         <div className="space-y-2">
           <Skeleton className="h-10 w-48" />
           <Skeleton className="h-4 w-64" />
         </div>
         <Skeleton className="h-12 w-32 rounded-xl" />
       </div>
-      <div className="grid grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {[1, 2, 3, 4].map((i) => (
           <Skeleton key={i} className="h-32 rounded-2xl" />
         ))}

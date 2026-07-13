@@ -62,11 +62,11 @@ export default function NotificationsPage() {
   const unreadIds = notifications.filter((n) => !n.isRead).map((n) => n._id);
 
   return (
-    <div className="px-8 pt-6">
-      <div className="flex items-center justify-between mb-6">
+    <div className="py-6">
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-2xl font-semibold text-slate-800">Notifications</h1>
 
-        <div className="flex gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row">
           <select
             value={type}
             onChange={(e) => {
@@ -90,7 +90,7 @@ export default function NotificationsPage() {
         </div>
       </div>
 
-      <div className="bg-white/60 border border-white/30 rounded-2xl p-4 space-y-3">
+      <div className="bg-white/60 border border-white/30 rounded-2xl p-3 space-y-3 sm:p-4">
         {loading && <div className="text-slate-500">Loading...</div>}
 
         {!loading && notifications.length === 0 && (
@@ -100,7 +100,7 @@ export default function NotificationsPage() {
         {notifications.map((n) => (
           <div
             key={n._id}
-            className={`p-4 rounded-xl border flex items-start justify-between gap-4 ${
+            className={`flex flex-col gap-4 rounded-xl border p-4 sm:flex-row sm:items-start sm:justify-between ${
               n.isRead
                 ? "bg-white/50 border-white/30"
                 : "bg-[#E9FFF0] border-[#BFE8CB]"
@@ -140,7 +140,7 @@ export default function NotificationsPage() {
 
       {/* Pagination */}
       {data && (
-        <div className="flex items-center justify-between mt-6">
+        <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-slate-500">
             Page {data.page} of {data.totalPages} • Total {data.totalDocs}
           </p>

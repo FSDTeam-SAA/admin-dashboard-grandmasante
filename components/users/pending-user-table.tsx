@@ -179,13 +179,13 @@ export function PendingUserTable({ role, title, description }: PendingUserTableP
   }
 
   return (
-    <div className="space-y-6 py-10">
+    <div className="space-y-6 py-6 lg:py-10">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-4xl font-bold text-[#38B475]">{title}</h1>
+          <h1 className="text-3xl font-bold text-[#38B475] sm:text-4xl">{title}</h1>
           <p className="text-slate-500 font-medium mt-1">{description || "Review users awaiting approval before accessing the platform."}</p>
         </div>
-        <div className="flex items-center gap-3 w-full md:w-auto">
+        <div className="flex w-full flex-col gap-3 sm:flex-row md:w-auto">
           <div className="relative flex-1 md:flex-none md:w-72">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
             <Input
@@ -208,8 +208,8 @@ export function PendingUserTable({ role, title, description }: PendingUserTableP
         </div>
       </div>
 
-      <div className={cn("bg-white/30 backdrop-blur-md rounded-[32px] overflow-hidden shadow-sm border border-white/40", isFetching && !isLoading && "opacity-80")}>
-        <Table>
+      <div className={cn("bg-white/30 backdrop-blur-md rounded-2xl overflow-hidden shadow-sm border border-white/40 lg:rounded-[32px]", isFetching && !isLoading && "opacity-80")}>
+        <Table className="min-w-[860px]">
           <TableHeader>
             <TableRow className="border-b border-white/40 hover:bg-transparent">
               <TableHead className="py-5 px-6 text-slate-500 font-bold text-base text-center">Name</TableHead>
@@ -226,7 +226,7 @@ export function PendingUserTable({ role, title, description }: PendingUserTableP
 
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-2">
         <div className="text-[#38B475] font-semibold text-sm">{pagingLabel}</div>
-        <div className="flex items-center gap-2">
+        <div className="flex max-w-full items-center gap-2 overflow-x-auto pb-1">
           <Button
             variant="outline"
             className="w-10 h-10 p-0 rounded-lg bg-white/60 border-none shadow-sm"
