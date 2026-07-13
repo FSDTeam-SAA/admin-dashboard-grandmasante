@@ -44,12 +44,17 @@ const menuItems = [
   { name: "Settings", icon: Settings, href: "/dashboard/settings" },
 ];
 
-export function Sidebar() {
+type SidebarProps = {
+  className?: string
+  onNavigate?: () => void
+}
+
+export function Sidebar({ className, onNavigate }: SidebarProps) {
   const pathname = usePathname();
 
   return (
     <div
-      className="w-72 flex flex-col h-screen border-r border-indigo-50/50 overflow-hidden"
+      className={cn("flex h-full max-h-dvh w-72 max-w-[85vw] flex-col overflow-hidden border-r border-indigo-50/50", className)}
       style={{
         background:
           "linear-gradient(86deg, #E5FFEF -2.79%, #E7E5FF 54.35%, #E5FFEF 111.49%)",
@@ -57,7 +62,7 @@ export function Sidebar() {
       }}
     >
       {/* Branding */}
-      <div className="py-10 flex flex-col items-center justify-center gap-2 shrink-0">
+      <div className="py-6 lg:py-10 flex flex-col items-center justify-center gap-2 shrink-0">
         <div className="relative w-[60px] h-[60px]">
           <Image
             src="/logo.png"
@@ -76,15 +81,16 @@ export function Sidebar() {
       </div>
 
       {/* Nav (scrolls but scrollbar hidden) */}
-      <nav className="flex-1 px-2 space-y-3 pb-4 overflow-y-auto sidebar-scroll">
+      <nav className="min-h-0 flex-1 space-y-3 overflow-y-auto px-2 pb-4 sidebar-scroll">
         {menuItems.map((item) => {
           const isActive = pathname === item.href;
           return (
             <Link
               key={item.href}
               href={item.href}
+              onClick={onNavigate}
               className={cn(
-                "flex items-center space-x-4 px-4 py-3.5 rounded-xl text-lg font-medium transition-all duration-200 border",
+                "flex items-center space-x-4 px-4 py-3 rounded-xl text-base lg:text-lg font-medium transition-all duration-200 border",
                 isActive
                   ? "bg-[#C2E9C8] text-[#4A8B4F] border-[#A3D9AC] shadow-sm"
                   : "bg-white/40 text-slate-500 border-white/20 hover:bg-white/60 hover:text-slate-700 shadow-sm"

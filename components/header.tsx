@@ -2,16 +2,33 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bell } from "lucide-react";
+import { Bell, Menu } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
-export default function Header() {
+type HeaderProps = {
+  onMenuClick?: () => void
+}
+
+export default function Header({ onMenuClick }: HeaderProps) {
   const pathname = usePathname();
   const isNotifications = pathname === "/dashboard/notifications";
 
   return (
-    <header className="flex items-center justify-end px-8 py-4 bg-transparent border-b border-[#4A8B4F]/30 gap-6">
+    <header className="flex items-center justify-between gap-3 border-b border-[#4A8B4F]/30 bg-transparent px-4 py-3 sm:px-6 lg:justify-end lg:px-8 lg:py-4">
+      <Button
+        type="button"
+        variant="ghost"
+        size="icon"
+        className="h-10 w-10 rounded-xl bg-white/40 text-slate-600 hover:bg-white/70 lg:hidden"
+        onClick={onMenuClick}
+        aria-label="Open navigation menu"
+      >
+        <Menu className="h-5 w-5" />
+      </Button>
+
+      <div className="flex items-center gap-3 sm:gap-6">
       {/* Notification Bell */}
       <Link
         href="/dashboard/notifications"
@@ -28,7 +45,7 @@ export default function Header() {
 
       {/* User Profile Section */}
       <div className="flex items-center gap-3">
-        <div className="text-right">
+        <div className="hidden text-right sm:block">
           <p className="text-sm font-bold text-slate-900 leading-tight">
             Mr. Suresh
           </p>
@@ -42,6 +59,7 @@ export default function Header() {
             MS
           </AvatarFallback>
         </Avatar>
+      </div>
       </div>
     </header>
   );
