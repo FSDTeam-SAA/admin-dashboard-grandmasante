@@ -60,12 +60,12 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="w-full max-w-[440px] space-y-8">
+    <div className="w-full max-w-[440px] space-y-6 sm:space-y-8">
       <div className="space-y-2 text-center">
-        <h1 className="text-3xl font-bold tracking-tight text-slate-900">
+        <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
           Login to Account
         </h1>
-        <p className="text-slate-500 font-medium">
+        <p className="text-sm text-slate-500 font-medium sm:text-base">
           Please enter your email and password to continue
         </p>
       </div>
@@ -130,7 +130,7 @@ export default function LoginPage() {
           />
 
           {/* Actions: Remember Me & Forgot Password */}
-          <div className="flex items-center justify-between px-1">
+          <div className="flex flex-col gap-3 px-1 sm:flex-row sm:items-center sm:justify-between">
             <FormField
               control={form.control}
               name="rememberMe"

@@ -36,10 +36,10 @@ function UserListContent() {
   })
 
   return (
-    <div className="space-y-6 py-10">
+    <div className="space-y-6 py-6 lg:py-10">
       {/* Search and Filter Bar */}
-      <div className="flex items-center justify-between gap-4">
-        <div className="relative w-full max-w-md">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+        <div className="relative w-full sm:max-w-md">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
           <Input
             placeholder="Search category..."
@@ -48,15 +48,15 @@ function UserListContent() {
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        <Button variant="outline" className="h-12 rounded-xl border-none bg-white/60 shadow-sm hover:bg-white px-6 gap-2 text-slate-600 font-bold">
+        <Button variant="outline" className="h-12 w-full rounded-xl border-none bg-white/60 shadow-sm hover:bg-white px-6 gap-2 text-slate-600 font-bold sm:w-auto">
           <Filter className="w-5 h-5 text-[#38B475]" />
           Filters
         </Button>
       </div>
 
       {/* Table Container */}
-      <div className="bg-white/30 backdrop-blur-md rounded-[32px] overflow-hidden shadow-sm border border-white/40">
-        <Table>
+      <div className="bg-white/30 backdrop-blur-md rounded-2xl overflow-hidden shadow-sm border border-white/40 lg:rounded-[32px]">
+        <Table className="min-w-[860px]">
           <TableHeader>
             <TableRow className="border-b border-white/40 hover:bg-transparent">
               <TableHead className="py-6 px-6 text-slate-500 font-bold text-base text-center">Name</TableHead>
@@ -121,11 +121,11 @@ function UserListContent() {
       </div>
 
       {/* Pagination Section */}
-      <div className="flex items-center justify-between pt-4">
+      <div className="flex flex-col gap-4 pt-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="text-[#38B475] font-bold text-sm">
           Showing 1 to 10 of {userData?.totalDocs || 120} results
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex max-w-full items-center gap-2 overflow-x-auto pb-1">
           <Button variant="outline" className="w-10 h-10 p-0 rounded-lg bg-white/60 border-none shadow-sm" disabled={page === 1} onClick={() => setPage(p => p - 1)}>
             <ChevronLeft className="w-5 h-5 text-slate-400" />
           </Button>

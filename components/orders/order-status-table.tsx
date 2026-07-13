@@ -150,15 +150,15 @@ export function OrderStatusTable({
   const pageButtons = useMemo(() => getPageNumbers(safePage, totalPages), [safePage, totalPages])
 
   return (
-    <div className="space-y-6 py-10">
+    <div className="space-y-6 py-6 lg:py-10">
       <div className="flex flex-col gap-1">
-        <h1 className="text-4xl font-bold text-[#38B475]">{title}</h1>
+        <h1 className="text-3xl font-bold text-[#38B475] sm:text-4xl">{title}</h1>
         <div className="text-sm font-semibold text-slate-400 flex items-center gap-2">{breadcrumb}</div>
         {description && <p className="text-slate-500">{description}</p>}
       </div>
 
-      <div className="flex items-center justify-between gap-4">
-        <div className="relative flex-1 max-w-md">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+        <div className="relative w-full sm:max-w-md sm:flex-1">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
           <Input
             value={search}
@@ -170,14 +170,14 @@ export function OrderStatusTable({
             className="pl-12 h-12 bg-white/60 border-none rounded-xl shadow-sm focus-visible:ring-1 focus-visible:ring-[#38B475]/30"
           />
         </div>
-        <Button className="h-12 rounded-xl border-none bg-white/60 shadow-sm hover:bg-white px-6 gap-2 text-slate-600 font-bold">
+        <Button className="h-12 w-full rounded-xl border-none bg-white/60 shadow-sm hover:bg-white px-6 gap-2 text-slate-600 font-bold sm:w-auto">
           <Filter className="w-5 h-5 text-[#38B475]" />
           Filters
         </Button>
       </div>
 
-      <div className={cn("bg-white/30 backdrop-blur-md rounded-[32px] overflow-hidden shadow-sm border border-white/40", isFetching && !isLoading && "opacity-80")}>
-        <Table>
+      <div className={cn("bg-white/30 backdrop-blur-md rounded-2xl overflow-hidden shadow-sm border border-white/40 lg:rounded-[32px]", isFetching && !isLoading && "opacity-80")}>
+        <Table className="min-w-[980px]">
           <TableHeader>
             <TableRow className="border-b border-white/40 hover:bg-transparent">
               <TableHead className="w-16 px-6">
@@ -315,12 +315,12 @@ export function OrderStatusTable({
         </Table>
       </div>
 
-      <div className="flex items-center justify-between pt-4">
+      <div className="flex flex-col gap-4 pt-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="text-[#38B475] font-bold text-sm">
           Showing {from} to {to} of {totalResults} results
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex max-w-full items-center gap-2 overflow-x-auto pb-1">
           <Button
             variant="outline"
             className="w-10 h-10 p-0 rounded-lg bg-white/60 border-none shadow-sm disabled:opacity-50"

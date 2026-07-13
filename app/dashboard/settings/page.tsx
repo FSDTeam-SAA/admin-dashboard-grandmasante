@@ -110,15 +110,15 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="space-y-8 py-10">
+    <div className="space-y-8 py-6 lg:py-10">
       {/* Page Header */}
       <div className="space-y-1">
-        <h1 className="text-4xl font-bold text-slate-900">Settings</h1>
+        <h1 className="text-3xl font-bold text-slate-900 sm:text-4xl">Settings</h1>
         <p className="text-slate-500 font-medium">Edit your personal information</p>
       </div>
 
       {/* Profile Banner Card */}
-      <div className="bg-white/30 backdrop-blur-md rounded-[32px] p-8 border border-white/40 shadow-sm flex items-center gap-6">
+      <div className="flex flex-col items-start gap-4 rounded-2xl border border-white/40 bg-white/30 p-4 shadow-sm backdrop-blur-md sm:flex-row sm:items-center sm:gap-6 sm:p-8 lg:rounded-[32px]">
         <div className="relative">
           <Avatar className="w-24 h-24 border-4 border-white shadow-md">
             <AvatarImage
@@ -139,7 +139,7 @@ export default function SettingsPage() {
       </div>
 
       {/* Change Password Card */}
-      <div className="bg-white/30 backdrop-blur-md rounded-[32px] p-10 border border-white/40 shadow-sm space-y-8">
+      <div className="space-y-8 rounded-2xl border border-white/40 bg-white/30 p-4 shadow-sm backdrop-blur-md sm:p-8 lg:rounded-[32px] lg:p-10">
         <h3 className="text-xl font-bold text-slate-900">Change password</h3>
 
         <Form {...form}>
@@ -219,11 +219,11 @@ export default function SettingsPage() {
               />
             </div>
 
-            <div className="flex justify-end">
+            <div className="flex justify-stretch sm:justify-end">
               <Button
                 type="submit"
                 disabled={updatePassword.isPending}
-                className="h-12 px-10 rounded-full font-bold shadow-lg transition-transform active:scale-95"
+                className="h-12 w-full px-10 rounded-full font-bold shadow-lg transition-transform active:scale-95 sm:w-auto"
                 style={{ background: "linear-gradient(90deg, #38B475 0%, #4B66F1 100%)" }}
               >
                 {updatePassword.isPending ? "Saving..." : "Save Changes"}

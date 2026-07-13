@@ -85,7 +85,7 @@ export default function EditProductPage() {
     return (
       <div className="space-y-6 py-4 animate-in fade-in duration-500">
         <Skeleton className="h-9 w-24 rounded-lg" />
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="space-y-2">
             <Skeleton className="h-8 w-48" />
             <Skeleton className="h-4 w-32" />
@@ -94,7 +94,7 @@ export default function EditProductPage() {
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Card className="lg:col-span-2 border-slate-100 rounded-[24px]">
-            <CardContent className="p-8 space-y-8">
+            <CardContent className="p-4 space-y-8 sm:p-8">
               <Skeleton className="h-7 w-44" />
               <div className="space-y-6">
                 <div className="space-y-2">
@@ -117,7 +117,7 @@ export default function EditProductPage() {
             </CardContent>
           </Card>
           <Card className="border-slate-100 rounded-[24px]">
-            <CardContent className="p-8 space-y-6">
+            <CardContent className="p-4 space-y-6 sm:p-8">
               <Skeleton className="h-7 w-36" />
               <div className="space-y-4">
                 <Skeleton className="h-4 w-12" />
@@ -142,7 +142,7 @@ export default function EditProductPage() {
         Back
       </Button>
 
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col">
           <h1 className="text-2xl font-bold text-slate-800">Edit Product</h1>
           <p className="text-sm font-medium text-slate-500">Update product information</p>
@@ -150,7 +150,7 @@ export default function EditProductPage() {
         <Button
           onClick={form.handleSubmit((v) => updateProductMutation.mutate(v))}
           disabled={updateProductMutation.isPending}
-          className="bg-gradient-to-r from-[#38B475] to-[#4B66F1] hover:opacity-90 h-11 px-8 rounded-xl flex items-center gap-2 font-bold text-white shadow-lg shadow-blue-100 disabled:opacity-70"
+          className="bg-gradient-to-r from-[#38B475] to-[#4B66F1] hover:opacity-90 h-11 w-full px-8 rounded-xl flex items-center gap-2 font-bold text-white shadow-lg shadow-blue-100 disabled:opacity-70 sm:w-auto"
         >
           <Save className="w-5 h-5" />
           {updateProductMutation.isPending ? "Saving..." : "Save Changes"}
@@ -159,7 +159,7 @@ export default function EditProductPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card className="lg:col-span-2 bg-white/40 border-slate-100 rounded-[24px] shadow-sm backdrop-blur-sm">
-          <CardContent className="p-8 space-y-8">
+          <CardContent className="p-4 space-y-8 sm:p-8">
             <h3 className="text-xl font-bold text-slate-800">General Information</h3>
             <Form {...form}>
               <form className="space-y-6">
@@ -183,7 +183,7 @@ export default function EditProductPage() {
 
                 <div className="space-y-4">
                   <FormLabel className="text-slate-800 font-bold">Set Prices</FormLabel>
-                  <div className="flex flex-wrap items-center gap-6">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-6">
                     <div className="flex items-center gap-3">
                       <Input {...form.register("unit")} className="w-24 h-12 text-center font-bold rounded-lg border-slate-200 bg-white" />
                       <span className="text-slate-600 font-bold">Unit</span>
@@ -199,7 +199,7 @@ export default function EditProductPage() {
 
                     <Button 
                       type="button" 
-                      className="bg-gradient-to-r from-[#38B475] to-[#4B66F1] h-12 px-10 rounded-xl font-bold text-white ml-auto transition-transform active:scale-95"
+                      className="bg-gradient-to-r from-[#38B475] to-[#4B66F1] h-12 w-full px-10 rounded-xl font-bold text-white transition-transform active:scale-95 sm:ml-auto sm:w-auto"
                       onClick={() => toast.success("Price set successfully")}
                     >
                       Set
@@ -221,7 +221,7 @@ export default function EditProductPage() {
         </Card>
 
         <Card className="bg-white/40 border-slate-100 rounded-[24px] shadow-sm backdrop-blur-sm">
-          <CardContent className="p-8 space-y-6">
+          <CardContent className="p-4 space-y-6 sm:p-8">
             <h3 className="text-xl font-bold text-slate-800">Product Image</h3>
             <div className="space-y-4">
               <p className="text-slate-800 font-bold text-sm">Photo</p>
